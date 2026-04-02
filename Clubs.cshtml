@@ -1,0 +1,108 @@
+﻿@page
+@model gymmm.Pages.ClubsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Clubs</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Clubs Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Clubs</h2>
+
+        <div class="form-card">
+            <form method="post" asp-page-handler="Add" id="clubForm">
+                <input type="hidden" id="clubId" name="ClubId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="description" name="Description" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Location ID</label>
+                        <input type="number" id="locationId" name="Location_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sport ID</label>
+                        <input type="number" id="sportId" name="Sport_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" step="0.01" id="price" name="Price" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="ClubId" id="deleteClubId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Clubs List</h3>
+            <table id="clubsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Location</th>
+                        <th>Sport</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.ClubsTable.Rows)
+                    {
+                        <tr onclick="selectClub(this)"
+                            data-id="@row["Club_Id"]"
+                            data-name="@row["Name"]"
+                            data-description="@row["Description"]"
+                            data-location="@row["Location_Id"]"
+                            data-sport="@row["Sport_Id"]"
+                            data-price="@row["Price"]">
+
+                            <td>@row["Club_Id"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["Description"]</td>
+                            <td>@row["Location_Id"]</td>
+                            <td>@row["Sport_Id"]</td>
+                            <td>@row["Price"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/clubs.js"></script>
+</body>
+</html>

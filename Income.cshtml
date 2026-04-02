@@ -1,0 +1,130 @@
+﻿@page
+@model gymmm.Pages.IncomeModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Income</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    
+    <nav class="navbar">
+        <div class="nav-brand">Income Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Income</h2>
+
+        <div class="form-card">
+
+            <form method="post" asp-page-handler="Add">
+                <input type="hidden" id="incomeId" name="IncomeId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Registration ID</label>
+                        <input type="number" id="registrationId" name="Registration_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sale ID</label>
+                        <input type="number" id="saleId" name="Sale_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Source</label>
+                        <input type="text" id="source" name="Source" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="datetime-local" id="date" name="Date" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Membership ID</label>
+                        <input type="number" id="membershipId" name="Membership_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Plan ID</label>
+                        <input type="number" id="planId" name="Plan_Id" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="width:100%;">
+                        <label>Notes</label>
+                        <input type="text" id="notes" name="Notes" />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="IncomeId" id="deleteIncomeId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Income List</h3>
+            <table id="incomeTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Registration</th>
+                        <th>Sale</th>
+                        <th>Source</th>
+                        <th>Date</th>
+                        <th>Membership</th>
+                        <th>Plan</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.IncomeTable.Rows)
+                    {
+                        <tr onclick="selectIncome(this)"
+                            data-id="@row["Income_Id"]"
+                            data-registration="@row["Registration_Id"]"
+                            data-sale="@row["Sale_Id"]"
+                            data-source="@row["Source"]"
+                            data-date="@row["Date"]"
+                            data-membership="@row["Membership_Id"]"
+                            data-plan="@row["Plan_Id"]"
+                            data-notes="@row["Notes"]">
+
+                            <td>@row["Income_Id"]</td>
+                            <td>@row["Registration_Id"]</td>
+                            <td>@row["Sale_Id"]</td>
+                            <td>@row["Source"]</td>
+                            <td>@row["Date"]</td>
+                            <td>@row["Membership_Id"]</td>
+                            <td>@row["Plan_Id"]</td>
+                            <td>@row["Notes"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/income.js"></script>
+</body>
+</html>

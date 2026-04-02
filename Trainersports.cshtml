@@ -1,0 +1,90 @@
+﻿@page
+@model gymmm.Pages.TrainersSportsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Trainers Sports</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Trainers Sports Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Trainers Sports</h2>
+
+        <div class="form-card">
+            <form method="post" asp-page-handler="Add" id="tsForm">
+                <input type="hidden" id="tsId" name="Trainersports_Id" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sport ID</label>
+                        <input type="number" id="sportId" name="Sport_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Trainer ID</label>
+                        <input type="number" id="trainerId" name="Trainers_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="Trainersports_Id" id="deleteTsId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Trainers Sports List</h3>
+            <table id="tsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sport</th>
+                        <th>Trainer</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.TrainersSportsTable.Rows)
+                    {
+                        <tr onclick="selectTS(this)"
+                            data-id="@row["Trainersports_Id"]"
+                            data-sport="@row["Sport_Id"]"
+                            data-trainer="@row["Trainers_Id"]"
+                            data-name="@row["Name"]">
+
+                            <td>@row["Trainersports_Id"]</td>
+                            <td>@row["Sport_Id"]</td>
+                            <td>@row["Trainers_Id"]</td>
+                            <td>@row["Name"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/trainerssports.js"></script>
+</body>
+</html>

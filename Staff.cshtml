@@ -1,0 +1,121 @@
+﻿@page
+@model gymmm.Pages.StaffModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">User Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+    
+
+    <div class="container">
+        <h2 class="page-title">Staff</h2>
+
+        <div class="form-card">
+
+            
+            <form id="staffForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="staffId" name="Staff_Id" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Role ID</label>
+                        <input type="number" id="roleId" name="Role_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Working Hours</label>
+                        <input type="number" id="workingh" name="WorkIngh" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Salary ID</label>
+                        <input type="number" id="salaryId" name="Salary_Id" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>User ID</label>
+                        <input type="number" id="userId" name="User_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" id="jobtitle" name="Jobtitle" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Shift</label>
+                        <input type="text" id="shift" name="Shift" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteStaffId" name="Staff_Id" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Staff List</h3>
+            <table id="staffsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Role</th>
+                        <th>Working Hours</th>
+                        <th>Salary</th>
+                        <th>User</th>
+                        <th>Job Title</th>
+                        <th>Shift</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.StaffTable.Rows)
+                    {
+                        <tr onclick="selectStaff(this)"
+                            data-id="@row["Staff_Id"]"
+                            data-role="@row["Role_Id"]"
+                            data-work="@row["WorkIngh"]"
+                            data-salary="@row["Salary_Id"]"
+                            data-user="@row["User_Id"]"
+                            data-job="@row["Jobtitle"]"
+                            data-shift="@row["Shift"]">
+
+                            <td>@row["Staff_Id"]</td>
+                            <td>@row["Role_Id"]</td>
+                            <td>@row["WorkIngh"]</td>
+                            <td>@row["Salary_Id"]</td>
+                            <td>@row["User_Id"]</td>
+                            <td>@row["Jobtitle"]</td>
+                            <td>@row["Shift"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/Staff.js"></script>
+</body>
+</html>

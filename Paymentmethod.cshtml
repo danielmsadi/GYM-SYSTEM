@@ -1,0 +1,79 @@
+﻿@page
+@model gymmm.Pages.PaymentMethodModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Method</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Screen Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Payment Methods</h2>
+
+        <div class="form-card">
+
+            
+            <form id="pmForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="pmId" name="PaymentmethodId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input type="text" id="type" name="Type" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deletePmId" name="PaymentmethodId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Payment Method List</h3>
+            <table id="pmTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.PaymentMethodTable.Rows)
+                    {
+                        <tr onclick="selectPM(this)"
+                            data-id="@row["Paymentmethod_Id"]"
+                            data-type="@row["Type"]">
+
+                            <td>@row["Paymentmethod_Id"]</td>
+                            <td>@row["Type"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/paymentmethod.js"></script>
+</body>
+</html>

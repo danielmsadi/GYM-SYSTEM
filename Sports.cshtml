@@ -1,0 +1,113 @@
+﻿@page
+@model gymmm.Pages.SportsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sports</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Sports Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Sports</h2>
+
+        <div class="form-card">
+
+            
+            <form id="sportsForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="sportId" name="SportID" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>In / Outdoor</label>
+                        <input type="text" id="inOutdoor" name="InOutdoor" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Trainer ID</label>
+                        <input type="number" id="trainerId" name="TrainerID" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Capacity</label>
+                        <input type="number" id="capacity" name="Capacity" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text" id="duration" name="Duration" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="SportID" id="deleteSportId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                    
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Sports List</h3>
+            <table id="sportsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>In/Outdoor</th>
+                        <th>Trainer ID</th>
+                        <th>Capacity</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.SportsTable.Rows)
+                    {
+                        <tr onclick="selectSport(this)"
+                            data-id="@row["Sport_Id"]"
+                            data-name="@row["Name"]"
+                            data-io="@row["In/outdoor"]"
+                            data-trainer="@row["Trainer_Id"]"
+                            data-capacity="@row["Capacity"]"
+                            data-duration="@row["Duraton"]">
+
+                            <td>@row["Sport_Id"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["In/outdoor"]</td>
+                            <td>@row["Trainer_Id"]</td>
+                            <td>@row["Capacity"]</td>
+                            <td>@row["Duraton"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/sports.js"></script>
+</body>
+</html>

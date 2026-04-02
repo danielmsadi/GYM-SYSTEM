@@ -1,0 +1,100 @@
+﻿@page
+@model gymmm.Pages.AttendanceModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Attendance</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Attendance Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Attendance</h2>
+
+        <div class="form-card">
+            <form method="post" asp-page-handler="Add" id="attendanceForm">
+                <input type="hidden" id="attendanceId" name="AttendanceId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Staff ID</label>
+                        <input type="number" id="staffId" name="StaffId" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Check In</label>
+                        <input type="text" id="checkIn" name="CheckIn" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Check Out</label>
+                        <input type="text" id="checkOut" name="CheckOut" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="datetime-local" id="date" name="Date" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="AttendanceId" id="deleteAttendanceId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Attendance List</h3>
+            <table id="attendanceTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Staff</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.AttendanceTable.Rows)
+                    {
+                        <tr onclick="selectAttendance(this)"
+                            data-id="@row["Attendance_Id"]"
+                            data-staff="@row["Staff_Id"]"
+                            data-checkin="@row["Checkin"]"
+                            data-checkout="@row["Checkout"]"
+                            data-date="@row["Date"]">
+
+                            <td>@row["Attendance_Id"]</td>
+                            <td>@row["Staff_Id"]</td>
+                            <td>@row["Checkin"]</td>
+                            <td>@row["Checkout"]</td>
+                            <td>@row["Date"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/attendance.js"></script>
+</body>
+</html>

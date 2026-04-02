@@ -1,0 +1,97 @@
+﻿@page
+@model gymmm.Pages.ReviewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Reviews Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Reviews</h2>
+
+        <div class="form-card">
+
+            
+            <form id="reviewForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="reviewId" name="ReviewId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Rating</label>
+                        <input type="text" id="rating" name="Rating" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="width:100%">
+                        <label>Comment</label>
+                        <textarea id="comment" name="Comment" rows="4" required></textarea>
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteReviewId" name="ReviewId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Review List</h3>
+            <table id="reviewTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.ReviewTable.Rows)
+                    {
+                        <tr onclick="selectReview(this)"
+                            data-id="@row["Review_Id"]"
+                            data-name="@row["Name"]"
+                            data-comment="@row["Comment"]"
+                            data-rating="@row["Rating"]">
+
+                            <td>@row["Review_Id"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["Comment"]</td>
+                            <td>@row["Rating"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/Reviews.js"></script>
+</body>
+</html>

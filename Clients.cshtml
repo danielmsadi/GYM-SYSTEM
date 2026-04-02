@@ -1,0 +1,121 @@
+﻿@page
+@model gymmm.Pages.ClientsModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Clients</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Clients Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Clients</h2>
+
+        <div class="form-card">
+            <form method="post" asp-page-handler="Add" id="clientForm">
+                <input type="hidden" id="clientId" name="ClientId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>User ID</label>
+                        <input type="number" id="userId" name="User_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" name="Email" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="date" name="Date" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select id="gender" name="Gender" required>
+                            <option value="">Select</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" id="phone" name="Phone" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="ClientId" id="deleteClientId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Clients List</h3>
+            <table id="clientsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.ClientsTable.Rows)
+                    {
+                        <tr onclick="selectClient(this)"
+                            data-id="@row["Client_Id"]"
+                            data-user="@row["User_Id"]"
+                            data-name="@row["Name"]"
+                            data-email="@row["Email"]"
+                            data-date="@row["Date"]"
+                            data-gender="@row["Gender"]"
+                            data-phone="@row["Phone"]">
+
+                            <td>@row["Client_Id"]</td>
+                            <td>@row["User_Id"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["Email"]</td>
+                            <td>@row["Date"]</td>
+                            <td>@row["Gender"]</td>
+                            <td>@row["Phone"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/clients.js"></script>
+</body>
+</html>

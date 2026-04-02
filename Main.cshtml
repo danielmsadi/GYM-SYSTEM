@@ -1,0 +1,105 @@
+﻿@page
+@model gymmm.Pages.MainModel
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Main — Gym System</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            padding: 24px;
+            font-family: sans-serif;
+            background: #f6f7fb;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+            gap: 12px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 14px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(20,20,50,0.05);
+            text-align: center;
+        }
+
+            .form-card a {
+                display: block;
+                text-decoration: none;
+                padding: 10px 6px;
+                color: #111;
+                font-weight: 600;
+            }
+
+        .top-actions button {
+            margin-left: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Gym System — Main</h1>
+            <div style="color:#666; font-size:13px;">Select a form to open</div>
+        </div>
+        <div class="top-actions">
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid">
+            <div class="form-card"><a href="/Expenses" target="_self">Expenses.html</a></div>
+            <div class="form-card"><a href="/Access" target="_self">access.html</a></div>
+            <div class="form-card"><a href="/Attendance" target="_self">attendance.html</a></div>
+            <div class="form-card"><a href="/Clients" target="_self">clients.html</a></div>
+            <div class="form-card"><a href="/Clubs" target="_self">clubs.html</a></div>
+            <div class="form-card"><a href="/Income" target="_self">income.html</a></div>
+            
+            <div class="form-card"><a href="/Location" target="_self">location.html</a></div>
+            <div class="form-card"><a href="/Membership" target="_self">membership.html</a></div>
+            <div class="form-card"><a href="/Paymentmethod" target="_self">paymentmethod.html</a></div>
+            <div class="form-card"><a href="/Payments" target="_self">payments.html</a></div>
+            <div class="form-card"><a href="/Products" target="_self">products.html</a></div>
+            <div class="form-card"><a href="/Reviews" target="_self">reviews.html</a></div>
+            <div class="form-card"><a href="/Salaries" target="_self">salaries.html</a></div>
+            <div class="form-card"><a href="/Screen" target="_self">screen.html</a></div>
+            <div class="form-card"><a href="/Sports" target="_self">sports.html</a></div>
+            <div class="form-card"><a href="/Staff" target="_self">staffs.html</a></div>
+            <div class="form-card"><a href="Stores" target="_self">stores.html</a></div>
+            <div class="form-card"><a href="/Trainers" target="_self">trainers.html</a></div>
+            <div class="form-card"><a href="/TrainersportS" target="_self">trainersports.html</a></div>
+            <div class="form-card"><a href="/Users" target="_self">users.html</a></div>
+
+        </div>
+    </main>
+
+    <script>
+        
+        document.getElementById('logoutBtn').addEventListener('click', function(){ window.location = '/Index'; });
+    </script>
+</body>
+</html>
+

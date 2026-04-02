@@ -1,0 +1,90 @@
+﻿@page
+@model gymmm.Pages.AccessModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Access</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Access Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Access</h2>
+
+        <div class="form-card">
+            <form method="post" asp-page-handler="Add" id="accessForm">
+                <input type="hidden" id="accessId" name="Access_Id" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <input type="text" id="type" name="Type" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>User ID</label>
+                        <input type="number" id="userId" name="User_Id" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="Access_Id" id="deleteAccessId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Access List</h3>
+            <table id="accessTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>User ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.AccessTable.Rows)
+                    {
+                        <tr onclick="selectAccess(this)"
+                            data-id="@row["Access_Id"]"
+                            data-type="@row["Type"]"
+                            data-name="@row["Name"]"
+                            data-user="@row["User-Id"]">
+
+                            <td>@row["Access_Id"]</td>
+                            <td>@row["Type"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["User-Id"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/access.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+﻿@page
+@model gymmm.Pages.MembershipModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Membership</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Membership Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Membership</h2>
+
+        <div class="form-card">
+
+            
+            <form id="membershipForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="membershipId" name="MembershipId" />
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>Client ID</label>
+                        <input type="number" id="clientId" name="Client_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Plan ID</label>
+                        <input type="number" id="planId" name="Plan_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Plan Name</label>
+                        <input type="text" id="planname" name="Planname" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price</label>
+                        <input type="number" id="price" name="Price" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <input type="text" id="currency" name="Currency" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input type="datetime-local" id="startDate" name="StartDate" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input type="datetime-local" id="endDate" name="EndDate" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Discount</label>
+                        <input type="number" id="discount" name="Discount" />
+                    </div>
+
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteMembershipId" name="MembershipId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Membership List</h3>
+            <table id="membershipTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Client</th>
+                        <th>Plan</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Currency</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Discount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.MembershipTable.Rows)
+                    {
+                        <tr onclick="selectMembership(this)"
+                            data-id="@row["Membership_Id"]"
+                            data-client="@row["Client_Id"]"
+                            data-plan="@row["Plan_Id"]"
+                            data-planname="@row["Planname"]"
+                            data-price="@row["Price"]"
+                            data-currency="@row["Currency_Id"]"
+                            data-start="@row["StartDate"]"
+                            data-end="@row["EndDate"]"
+                            data-discount="@row["Discount"]">
+
+                            <td>@row["Membership_Id"]</td>
+                            <td>@row["Client_Id"]</td>
+                            <td>@row["Plan_Id"]</td>
+                            <td>@row["Planname"]</td>
+                            <td>@row["Price"]</td>
+                            <td>@row["Currency_Id"]</td>
+                            <td>@row["StartDate"]</td>
+                            <td>@row["EndDate"]</td>
+                            <td>@row["Discount"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/membership.js"></script>
+</body>
+</html>

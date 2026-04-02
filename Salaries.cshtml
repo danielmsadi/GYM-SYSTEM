@@ -1,0 +1,105 @@
+﻿@page
+@model gymmm.Pages.SalariesModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salaries</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">User Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Salaries</h2>
+
+        <div class="form-card">
+
+            
+            <form id="salaryForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="salaryId" name="SalaryId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Staff ID</label>
+                        <input type="number" id="staffId" name="Staff_Id" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="number" id="amount" name="Amount" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Currency ID</label>
+                        <input type="number" id="currencyId" name="Currency_Id" required />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="date" name="Date" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteSalaryId" name="SalaryId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Salaries List</h3>
+            <table id="salariesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Staff ID</th>
+                        <th>Amount</th>
+                        <th>Currency</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.SalariesTable.Rows)
+                    {
+                        <tr onclick="selectSalary(this)"
+                            data-id="@row["Salary_Id"]"
+                            data-staff="@row["Staff-Id"]"
+                            data-amount="@row["Amount"]"
+                            data-currency="@row["Currency_Id"]"
+                            data-date="@row["Date"]">
+
+                            <td>@row["Salary_Id"]</td>
+                            <td>@row["Staff-Id"]</td>
+                            <td>@row["Amount"]</td>
+                            <td>@row["Currency_Id"]</td>
+                            <td>@row["Date"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/salaries.js"></script>
+</body>
+</html>

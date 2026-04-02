@@ -1,0 +1,87 @@
+﻿@page
+@model gymmm.Pages.ScreenModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screen</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Screen Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Screen</h2>
+
+        <div class="form-card">
+
+           
+            <form id="screenForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="screenId" name="Screen_Id" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" name="Name" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Access ID</label>
+                        <input type="number" id="accessId" name="Access_Id" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteScreenId" name="Screen_Id" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Screen List</h3>
+            <table id="screenTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Access ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.ScreenTable.Rows)
+                    {
+                        <tr onclick="selectScreen(this)"
+                            data-id="@row["Screen_Id"]"
+                            data-name="@row["Name"]"
+                            data-access="@row["Access_Id"]">
+
+                            <td>@row["Screen_Id"]</td>
+                            <td>@row["Name"]</td>
+                            <td>@row["Access_Id"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/screen.js"></script>
+</body>
+</html>

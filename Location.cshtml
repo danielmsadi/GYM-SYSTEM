@@ -1,0 +1,95 @@
+﻿@page
+@model gymmm.Pages.LocationModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Location</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Location Dashboard</div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="container">
+        <h2 class="page-title">Locations</h2>
+
+        <div class="form-card">
+
+           
+            <form id="locationForm" method="post" asp-page-handler="Add">
+                <input type="hidden" id="locationId" name="LocationId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Area</label>
+                        <input type="text" id="area" name="Area" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" id="address" name="Address" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Street Name</label>
+                        <input type="text" id="streetname" name="Streetname" required />
+                    </div>
+                </div>
+
+                <div class="button-row">
+                    <button type="submit" class="btn add">➕ Add</button>
+                    <button type="submit" class="btn edit" formaction="?handler=Update">✏ Edit</button>
+                    <button type="button" class="btn clear" onclick="clearForm()">🧹 Clear</button>
+                    <button type="button" class="btn exit" onclick="exitDashboard()">🚪 Exit</button>
+                </div>
+            </form>
+
+            
+            <div class="button-row">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" name="LocationId" id="deleteLocationId" />
+                    <button type="submit" class="btn delete">🗑 Delete</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="table-card">
+            <h3>📋 Location List</h3>
+            <table id="locationTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Area</th>
+                        <th>Address</th>
+                        <th>Street</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (System.Data.DataRow row in Model.LocationTable.Rows)
+                    {
+                        <tr onclick="selectLocation(this)"
+                            data-id="@row["Location_Id"]"
+                            data-area="@row["Area"]"
+                            data-address="@row["Address"]"
+                            data-street="@row["Streetname"]">
+
+                            <td>@row["Location_Id"]</td>
+                            <td>@row["Area"]</td>
+                            <td>@row["Address"]</td>
+                            <td>@row["Streetname"]</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="~/js/location.js"></script>
+</body>
+</html>
